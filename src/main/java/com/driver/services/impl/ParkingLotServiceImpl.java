@@ -66,10 +66,17 @@ public class ParkingLotServiceImpl implements ParkingLotService {
     }
 
     @Override
-    public Spot updateSpot(int parkingLotId, int spotId, int pricePerHour) {
+    public Spot updateSpot(int parkingLotId, int spotId, int pricePerHour) throws Exception {
 
         Spot spot = spotRepository1.findById(spotId).get();
-        ParkingLot parkingLot = parkingLotRepository1.findById(parkingLotId).get();
+        ParkingLot parkingLot = new ParkingLot();
+        try{
+            parkingLot = parkingLotRepository1.findById(parkingLotId).get();
+        }
+        catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+
 
         //updating spot
         spot.setParkingLot(parkingLot);

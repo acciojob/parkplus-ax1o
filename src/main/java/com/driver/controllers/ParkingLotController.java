@@ -41,9 +41,16 @@ public class ParkingLotController {
     }
 
     @PutMapping("/{parkingLotId}/spot/{spotId}/update")
-    public ResponseEntity<Spot> updateSpot(@PathVariable int parkingLotId, @PathVariable int spotId, @RequestParam int pricePerHour) {
+    public ResponseEntity<Spot> updateSpot(@PathVariable int parkingLotId, @PathVariable int spotId, @RequestParam int pricePerHour) throws Exception {
         //update the details of a spot
-        Spot updatedSpot = parkingLotService.updateSpot(parkingLotId,spotId,pricePerHour);
+        Spot updatedSpot;
+        try{
+            updatedSpot = parkingLotService.updateSpot(parkingLotId,spotId,pricePerHour);
+        }
+        catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+
         return new ResponseEntity<>(updatedSpot, HttpStatus.OK);
     }
 
