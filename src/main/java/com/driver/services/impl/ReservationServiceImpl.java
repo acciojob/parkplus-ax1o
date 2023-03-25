@@ -54,7 +54,7 @@ public class ReservationServiceImpl implements ReservationService {
         //find the best spot
         for(Spot spot : spots){
 
-            if(spot.isOccupied()==false){
+            if(spot.getOccupied()==false){
                 int wheelsForSpot = 0;
                 if(spot.getSpotType().equals(SpotType.TWO_WHEELER))
                     wheelsForSpot = 2;
