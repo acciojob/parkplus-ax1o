@@ -30,7 +30,7 @@ public class ReservationServiceImpl implements ReservationService {
         try{
             user = userRepository3.findById(userId).get();
         }catch (Exception e){
-            throw new Exception("user not found");
+            throw new Exception("Cannot make reservation");
         }
 
         //search parking lot
@@ -38,7 +38,7 @@ public class ReservationServiceImpl implements ReservationService {
         try{
             parkingLot = parkingLotRepository3.findById(parkingLotId).get();
         }catch (Exception e){
-            throw new Exception("parking not found");
+            throw new Exception("Cannot make reservation");
         }
 
         List<Spot> spots = parkingLot.getSpotList();
@@ -81,11 +81,12 @@ public class ReservationServiceImpl implements ReservationService {
 
         //no parking spot available
         if(found == false){
-            throw new Exception("Slot not found");
+            throw new Exception("Cannot make reservation");
         }
 
         //spot is occupied
         spotParked.setOccupied(true);
+
         reservation.setSpot(spotParked);
         reservation.setUser(user);
         reservation.setNumberOfHours(timeInHours);
@@ -93,6 +94,7 @@ public class ReservationServiceImpl implements ReservationService {
         //set reservation in spot list
         List<Reservation> spotParkedReservationListList = spotParked.getReservationList();
         spotParkedReservationListList.add(reservation);
+        spotParked.setReservationList(spotParkedReservationListList);
        // spotRepository3.save(spotParked);
 
         //set user reservation list
